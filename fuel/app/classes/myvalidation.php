@@ -10,6 +10,16 @@ class MyValidation extends \Fuel\Core\Validation
 {
 
     /**
+     *
+     */
+
+    public function _validation_decimal($val)
+    {
+        $pattern = '/^\d+(\.\d{1,2})?$/';
+        return preg_match($pattern, $val) > 0;
+    }
+
+    /**
      * Validamos el ruc
      *
      * @param string

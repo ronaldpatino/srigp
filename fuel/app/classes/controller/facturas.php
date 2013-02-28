@@ -42,7 +42,25 @@ class Controller_Facturas extends Controller_Template
 
 				if ($factura and $factura->save())
 				{
-					Session::set_flash('success', 'Added factura #'.$factura->id.'.');
+
+                    $ruc = Model_Ruc::forge(array(
+                        'ruc' => Input::post('ruc'),
+                        'nombre' => Input::post('nombre'),
+                    ));
+                    $ruc = Model_Ruc::query()->where('ruc', Input::post('ruc'));
+
+                    if ($ruc->count() == 0)
+                    {
+                        $ruc_nuevo = Model_Ruc::forge(array(
+                            'ruc' => Input::post('ruc'),
+                            'nombre' => Input::post('nombre'),
+                        ));
+
+                        $ruc_nuevo->save();
+                    }
+
+
+                    Session::set_flash('success', 'Added factura #'.$factura->id.'.');
 
 					Response::redirect('facturas');
 				}

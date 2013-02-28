@@ -19,9 +19,8 @@
 			<td><?php echo $factura->fecha; ?></td>
 			<td><?php echo $factura->valor; ?></td>
 			<td>
-				<?php echo Html::anchor('facturas/view/'.$factura->id, 'View'); ?> |
-				<?php echo Html::anchor('facturas/edit/'.$factura->id, 'Edit'); ?> |
-				<?php echo Html::anchor('facturas/delete/'.$factura->id, 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>
+				<?php echo Html::anchor('facturas/edit/'.$factura->id, 'Editar'); ?> |
+				<?php echo Html::anchor('facturas/delete/'.$factura->id, 'Borrar', array('onclick' => "return confirm('Seguro desea borrar?')")); ?>
 
 			</td>
 		</tr>

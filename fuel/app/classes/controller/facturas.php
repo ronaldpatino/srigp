@@ -4,7 +4,7 @@ class Controller_Facturas extends Controller_Template
 
 	public function action_index()
 	{
-		$data['facturas'] = Model_Factura::find('all');
+		$data['facturas'] = Model_Factura::find('all',array('order_by' => array('ruc' => 'asc')));
 		$this->template->title = "Facturas";
 		$this->template->content = View::forge('facturas/index', $data);
 
@@ -35,7 +35,7 @@ class Controller_Facturas extends Controller_Template
 			{
 				$factura = Model_Factura::forge(array(
 					'ruc' => Input::post('ruc'),
-					'nombre' => Input::post('nombre'),
+					'nombre' => Str::upper(Input::post('nombre')),
 					'fecha' => Input::post('fecha'),
 					'valor' => Input::post('valor'),
 				));
@@ -45,7 +45,7 @@ class Controller_Facturas extends Controller_Template
 
                     $ruc = Model_Ruc::forge(array(
                         'ruc' => Input::post('ruc'),
-                        'nombre' => Input::post('nombre'),
+                        'nombre' => Str::upper(Input::post('nombre')),
                     ));
                     $ruc = Model_Ruc::query()->where('ruc', Input::post('ruc'));
 

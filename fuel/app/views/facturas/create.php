@@ -4,4 +4,4 @@
 <?php echo render('facturas/_form'); ?>
 
 
-<p><?php echo Html::anchor('facturas', 'Back'); ?></p>
+

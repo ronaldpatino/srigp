@@ -7,7 +7,7 @@ class Model_Factura extends Model
 		'id',
 		'ruc',
 		'nombre',
-		'valor',
+		'valor'=> array('data_type' => 'decimal'),
 		'created_at',
 		'updated_at',
 	);
@@ -21,6 +21,9 @@ class Model_Factura extends Model
 			'events' => array('before_save'),
 			'mysql_timestamp' => false,
 		),
+        'Orm\\Observer_Typing' => array(
+            'events' => array('before_save')
+        )
 	);
 
 	public static function validate($factory)
@@ -28,7 +31,7 @@ class Model_Factura extends Model
 		$val = MyValidation::forge($factory);
 		$val->add_field('ruc', 'Ruc', 'required|valid_string[numeric]|exact_length[13]|max_length[13]|ruc');
 		$val->add_field('nombre', 'Nombre', 'required|max_length[255]');
-		$val->add_field('valor', 'Valor', 'required|valid_string[numeric]');
+		$val->add_field('valor', 'Valor', 'required|decimal');
 
 		return $val;
 	}

@@ -36,6 +36,7 @@ class Controller_Facturas extends Controller_Template
 				$factura = Model_Factura::forge(array(
 					'ruc' => Input::post('ruc'),
 					'nombre' => Input::post('nombre'),
+					'fecha' => Input::post('fecha'),
 					'valor' => Input::post('valor'),
 				));
 
@@ -78,6 +79,7 @@ class Controller_Facturas extends Controller_Template
 		{
 			$factura->ruc = Input::post('ruc');
 			$factura->nombre = Input::post('nombre');
+			$factura->fecha = Input::post('fecha');
 			$factura->valor = Input::post('valor');
 
 			if ($factura->save())
@@ -99,6 +101,7 @@ class Controller_Facturas extends Controller_Template
 			{
 				$factura->ruc = $val->validated('ruc');
 				$factura->nombre = $val->validated('nombre');
+				$factura->fecha = $val->validated('fecha');
 				$factura->valor = $val->validated('valor');
 
 				Session::set_flash('error', $val->error());

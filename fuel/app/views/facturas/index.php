@@ -6,6 +6,7 @@
 		<tr>
 			<th>Ruc</th>
 			<th>Nombre</th>
+			<th>Fecha</th>
 			<th>Valor</th>
 			<th></th>
 		</tr>
@@ -15,6 +16,7 @@
 
 			<td><?php echo $factura->ruc; ?></td>
 			<td><?php echo $factura->nombre; ?></td>
+			<td><?php echo $factura->fecha; ?></td>
 			<td><?php echo $factura->valor; ?></td>
 			<td>
 				<?php echo Html::anchor('facturas/view/'.$factura->id, 'View'); ?> |

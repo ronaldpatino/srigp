@@ -7,6 +7,9 @@
 	<strong>Nombre:</strong>
 	<?php echo $factura->nombre; ?></p>
 <p>
+	<strong>Fecha:</strong>
+	<?php echo $factura->fecha; ?></p>
+<p>
 	<strong>Valor:</strong>
 	<?php echo $factura->valor; ?></p>
 

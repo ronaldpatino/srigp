@@ -8,9 +8,10 @@ class Create_facturas
 	{
 		\DBUtil::create_table('facturas', array(
 			'id' => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true),
-			'ruc' => array('constraint' => 13, 'type' => 'int'),
+			'ruc' => array('constraint' => 13, 'type' => 'varchar'),
 			'nombre' => array('constraint' => 255, 'type' => 'varchar'),
-			'valor' => array('type' => 'decimal'),
+			'fecha' => array('type' => 'datetime'),
+			'valor' => array('constraint' => '10,2', 'type' => 'decimal'),
 			'created_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 			'updated_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 

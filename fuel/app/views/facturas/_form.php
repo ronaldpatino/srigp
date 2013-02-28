@@ -21,7 +21,7 @@
 			<?php echo Form::label('Fecha', 'fecha'); ?>
 
 			<div class="input">
-				<?php echo Form::input('fecha', Input::post('fecha', isset($factura) ? $factura->fecha : ''), array('class' => 'span4')); ?>
+				<?php echo Form::input('fecha', Input::post('fecha', isset($factura) ? $factura->fecha : date('Y-m-d')), array('class' => 'span4','data-date'=>date('Y-m-d'), 'data-date-format'=>'yyyy-mm-dd')); ?>
 
 			</div>
 		</div>
@@ -34,8 +34,8 @@
 			</div>
 		</div>
 		<div class="actions">
-			<?php echo Form::submit('submit', 'Save', array('class' => 'btn btn-primary')); ?>
-
+			<?php echo Form::submit('submit', 'Grabar Factura', array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::anchor('facturas', 'Ir al listado de facturas', array('class' => 'btn')); ?>
 		</div>
 	</fieldset>
 <?php echo Form::close(); ?>
@@ -63,5 +63,7 @@
                 return item;
             }
         });
+
+        $('#form_fecha').datepicker({endDate: '<?php echo date('Y-m-d');?>',autoclose:true,todayHighlight:true});
     });
 </script>

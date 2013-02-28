@@ -45,18 +45,22 @@
     $(document).ready(function() {
         $('#form_ruc').typeahead({
             minLength: 3,
-            source: function(query, process) {
-                $.post('/search/typeahead', { q: query, limit: 8 }, function(data) {
-                    process(JSON.parse(data));
+            source: function(ruc, process) {
+                $.post('/fp/api/rucs.json', { ruc: ruc, limit: 10 }, function(data) {
+                    listado = [];
+                    mapa = {};
+
+                    $.each(data, function (i, item) {
+                        mapa[item.ruc] = item;
+                        listado.push(item.ruc);
+                    });
+
+                    process(listado);
                 });
             },
             updater: function (item) {
-                document.location = "/search?q=" + encodeURIComponent(item);
+                $("#form_nombre").val(mapa[item].nombre);
                 return item;
-            },
-            sorter: function (items) {
-                items.unshift(this.query);
-                return items;
             }
         });
     });

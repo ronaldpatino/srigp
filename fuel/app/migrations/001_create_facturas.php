@@ -13,6 +13,9 @@ class Create_facturas
 			'fecha' => array('type' => 'datetime'),
 			'tipo' => array('constraint' => 1, 'type' => 'int'),
 			'valor' => array('constraint' => '10,2', 'type' => 'decimal'),
+			'comentario' => array('constraint' => 255, 'type' => 'varchar'),
+            'created_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
+            'updated_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 
 		), array('id'));
 	}

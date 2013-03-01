@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<title><?php echo $title; ?></title>
-	<?php echo Asset::css('bootstrap.css'); ?>
-    <?php echo Asset::js(array('jquery.js', 'bootstrap.js'));?>
+	<?php echo Asset::css(array('bootstrap.css','datepicker.css')); ?>
+    <?php echo Asset::js(array('jquery.js', 'bootstrap.js','bootstrap-datepicker.js'));?>
 	<style>
 		body { margin: 40px; }
 	</style>
@@ -35,11 +35,13 @@
 			</div>
 		</div>
 		<footer>
+            <!--
 			<p class="pull-right">Page rendered in {exec_time}s using {mem_usage}mb of memory.</p>
 			<p>
 				<a href="http://fuelphp.com">FuelPHP</a> is released under the MIT license.<br>
 				<small>Version: <?php echo e(Fuel::VERSION); ?></small>
 			</p>
+			-->
 		</footer>
 	</div>
 </body>

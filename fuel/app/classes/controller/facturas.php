@@ -2,26 +2,63 @@
 class Controller_Facturas extends Controller_Template 
 {
 
+    protected static $tipos_deducibles = array('1' => 'ALIMENTACI&Oacute;N', '2' => 'EDUCACI&Oacute;N', '3'=>'SALUD','4'=>'VESTIMENTA', '5'=>'VIVIENDA');
+
+
 	public function action_index()
 	{
-		$data['facturas'] = Model_Factura::find('all',array('order_by' => array('ruc' => 'asc')));
-		$this->template->title = "Facturas";
-		$this->template->content = View::forge('facturas/index', $data);
+
+        $data['facturas'] = DB::query('SELECT ruc, nombre , tipo,( SELECT SUM(valor)FROM facturas si WHERE si.ruc like so.ruc) total FROM facturas so GROUP BY ruc')->as_object('Model_Factura')->execute();
+
+        $view = View::forge('facturas/index', $data);
+        $this->template->title = "Facturas";
+		$this->template->content = $view;
 
 	}
 
-	public function action_view($id = null)
+	public function action_view($ruc = null)
 	{
-		is_null($id) and Response::redirect('Facturas');
+		is_null($ruc) and Response::redirect('Facturas');
 
-		if ( ! $data['factura'] = Model_Factura::find($id))
+        $page = Input::get('page')? Input::get('page'):1;
+
+        $query = Model_Factura::find()->where('ruc', $ruc);
+
+        // pagination  config
+        $config = array(
+
+            'total_items' => $query->count(),
+            'per_page' => 10,
+            'uri_segment' => 'page',
+            'current_page' => $page,
+            'template' => array(
+                'wrapper_start' => '<div class="pagination"> ',
+                'wrapper_end' => ' </div>',
+            ),
+        );
+
+        $pagination = Pagination::forge('mypagination', $config);
+
+
+        if ( ! $data['facturas'] = Model_Factura::find('all',
+                                                            array(
+                                                            'where' => array('ruc'=> $ruc),
+                                                            'order_by' => array('fecha' => 'desc', 'tipo'=>'asc'),
+                                                            'limit' =>$pagination->per_page,
+                                                            'offset' => $pagination->offset
+                                                            )
+        ))
 		{
-			Session::set_flash('error', 'Could not find factura #'.$id);
+			Session::set_flash('error', 'Could not find factura #'.$ruc);
 			Response::redirect('Facturas');
 		}
 
-		$this->template->title = "Factura";
-		$this->template->content = View::forge('facturas/view', $data);
+        $data['pagination'] = $pagination;
+
+        $view = View::forge('facturas/view', $data);
+        $view->set_global('tipos_deducibles', Controller_Facturas::$tipos_deducibles);
+        $this->template->title = "Factura";
+		$this->template->content = $view;
 
 	}
 
@@ -36,6 +73,7 @@ class Controller_Facturas extends Controller_Template
 				$factura = Model_Factura::forge(array(
 					'ruc' => Input::post('ruc'),
 					'nombre' => Str::upper(Input::post('nombre')),
+                    'tipo' => Input::post('tipo'),
 					'fecha' => Input::post('fecha'),
 					'valor' => Input::post('valor'),
 				));
@@ -77,7 +115,10 @@ class Controller_Facturas extends Controller_Template
 		}
 
 		$this->template->title = "Facturas";
-		$this->template->content = View::forge('facturas/create');
+        $view = View::forge('facturas/create');
+        $view->set_global('tipos_deducibles', Controller_Facturas::$tipos_deducibles);
+		$this->template->content = $view;
+
 
 	}
 
@@ -152,6 +193,5 @@ class Controller_Facturas extends Controller_Template
 		Response::redirect('facturas');
 
 	}
-
 
 }

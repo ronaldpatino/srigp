@@ -16,17 +16,19 @@
 				<h1><?php echo $title; ?></h1>
 				<hr>
 <?php if (Session::get_flash('success')): ?>
-				<div class="alert-message success">
-					<p>
+				<div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Muy Bien!</strong>
 					<?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
-					</p>
+
 				</div>
 <?php endif; ?>
 <?php if (Session::get_flash('error')): ?>
-				<div class="alert-message error">
-					<p>
+				<div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Algo sali&oacute; mal</strong>
 					<?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
-					</p>
+
 				</div>
 <?php endif; ?>
 			</div>

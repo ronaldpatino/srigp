@@ -13,7 +13,7 @@
 <?php foreach ($rucs as $ruc): ?>		<tr>
 
 			<td><?php echo $ruc->ruc; ?></td>
-			<td><?php echo $ruc->nombre; ?></td>
+			<td><?php echo Str::upper($ruc->nombre); ?></td>
 			<td>
 				<?php echo Html::anchor('rucs/view/'.$ruc->id, 'View'); ?> |
 				<?php echo Html::anchor('rucs/edit/'.$ruc->id, 'Edit'); ?> |

@@ -8,6 +8,7 @@ class Model_Factura extends Model
 		'ruc',
 		'nombre',
 		'fecha',
+        'tipo',
 		'valor',
 		'created_at',
 		'updated_at',

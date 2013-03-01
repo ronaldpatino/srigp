@@ -8,8 +8,57 @@ class Controller_Facturas extends Controller_Template
 	public function action_index()
 	{
 
-        $data['facturas'] = DB::query('SELECT ruc, nombre , tipo,( SELECT SUM(valor)FROM facturas si WHERE si.ruc like so.ruc) total FROM facturas so GROUP BY ruc')->as_object('Model_Factura')->execute();
+        $page = Input::get('page')? Input::get('page'):1;
 
+        $query = DB::query('SELECT
+                                    ruc,
+                                    nombre ,
+                                    tipo,
+                                    ( SELECT
+                                            SUM(valor)
+                                       FROM
+                                            facturas si
+                                       WHERE
+                                            si.ruc like so.ruc)
+                                    total
+                            FROM
+                                facturas so
+                            GROUP BY ruc
+
+                            ORDER BY nombre  ASC, ruc ASC')->as_object('Model_Factura')->execute();
+
+        // pagination  config
+        $config = array(
+
+            'total_items' => $query->count(),
+            'per_page' => 2,
+            'uri_segment' => 'page',
+            'current_page' => $page,
+            'template' => array(
+                'wrapper_start' => '<div class="pagination"> ',
+                'wrapper_end' => ' </div>',
+            ),
+        );
+
+        $pagination = Pagination::forge('mypagination', $config);
+
+
+        $data['facturas'] = DB::query("SELECT
+                                            ruc, nombre , tipo,( SELECT
+                                                                        SUM(valor)
+                                                                   FROM
+                                                                        facturas si
+                                                                   WHERE
+                                                                        si.ruc like so.ruc) total
+                                            FROM
+                                                facturas so
+                                            GROUP BY ruc
+
+                                            ORDER BY nombre  ASC, ruc ASC
+                                            LIMIT {$pagination->offset},{$pagination->per_page}
+                                            ")->as_object('Model_Factura')->execute();
+
+        $data['pagination'] = $pagination;
         $view = View::forge('facturas/index', $data);
         $this->template->title = "Facturas";
 		$this->template->content = $view;
@@ -76,6 +125,7 @@ class Controller_Facturas extends Controller_Template
                     'tipo' => Input::post('tipo'),
 					'fecha' => Input::post('fecha'),
 					'valor' => Input::post('valor'),
+                    'comentario' => Input::post('comentario'),
 				));
 
 				if ($factura and $factura->save())
@@ -91,7 +141,7 @@ class Controller_Facturas extends Controller_Template
                     {
                         $ruc_nuevo = Model_Ruc::forge(array(
                             'ruc' => Input::post('ruc'),
-                            'nombre' => Input::post('nombre'),
+                            'nombre' => Str::upper(Input::post('nombre')),
                         ));
 
                         $ruc_nuevo->save();
@@ -140,6 +190,7 @@ class Controller_Facturas extends Controller_Template
 			$factura->nombre = Input::post('nombre');
 			$factura->fecha = Input::post('fecha');
 			$factura->valor = Input::post('valor');
+            $factura->comentario = Input::post('comentario');
 
 			if ($factura->save())
 			{

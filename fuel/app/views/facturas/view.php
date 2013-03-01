@@ -1,17 +1,36 @@
-<h2>Viewing #<?php echo $factura->id; ?></h2>
+<h2>Listing Facturas</h2>
+<br>
+<?php if ($facturas): ?>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($facturas as $factura): ?>		<tr>
 
-<p>
-	<strong>Ruc:</strong>
-	<?php echo $factura->ruc; ?></p>
-<p>
-	<strong>Nombre:</strong>
-	<?php echo $factura->nombre; ?></p>
-<p>
-	<strong>Fecha:</strong>
-	<?php echo $factura->fecha; ?></p>
-<p>
-	<strong>Valor:</strong>
-	<?php echo $factura->valor; ?></p>
 
-<?php echo Html::anchor('facturas/edit/'.$factura->id, 'Edit'); ?> |
-<?php echo Html::anchor('facturas', 'Back'); ?>
+        <td><?php echo $factura->fecha; ?></td>
+        <td><?php echo $tipos_deducibles[$factura->tipo]; ?></td>
+        <td><?php echo $factura->valor; ?></td>
+        <td>
+            <?php echo Html::anchor('facturas/view/'.$factura->ruc, 'Detalle'); ?>
+        </td>
+    </tr>
+        <?php endforeach; ?>	</tbody>
+</table>
+
+<?php echo $pagination->render(); ?>
+<?php else: ?>
+<p>No Facturas.</p>
+
+<?php endif; ?><p>
+    <?php echo Html::anchor('facturas/create', 'Add new Factura', array('class' => 'btn btn-success')); ?>
+
+</p>
+
+

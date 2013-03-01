@@ -4,7 +4,7 @@
 			<?php echo Form::label('Ruc', 'ruc'); ?>
 
 			<div class="input">
-				<?php echo Form::input('ruc', Input::post('ruc', isset($factura) ? $factura->ruc : ''), array('class' => 'span4')); ?>
+				<?php echo Form::input('ruc', Input::post('ruc', isset($factura) ? $factura->ruc : ''), array('class' => 'span4', 'autocomplete'=>'off')); ?>
 
 			</div>
 		</div>
@@ -38,7 +38,7 @@
 			<?php echo Form::label('Valor', 'valor'); ?>
 
 			<div class="input">
-				<?php echo Form::input('valor', Input::post('valor', isset($factura) ? $factura->valor : ''), array('class' => 'span4')); ?>
+				<?php echo Form::input('valor', Input::post('valor', isset($factura) ? $factura->valor : ''), array('class' => 'span4', 'autocomplete'=>'off')); ?>
 
 			</div>
 		</div>

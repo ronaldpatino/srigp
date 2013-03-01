@@ -1,5 +1,4 @@
 <?php echo Form::open(); ?>
-
 	<fieldset>
 		<div class="clearfix">
 			<?php echo Form::label('Ruc', 'ruc'); ?>
@@ -25,6 +24,16 @@
 
 			</div>
 		</div>
+
+        <div class="clearfix">
+            <?php echo Form::label('Tipo', 'tipo'); ?>
+
+            <div class="input">
+                <?php echo Form::select('tipo', Input::post('fecha', isset($factura) ? $factura->tipo : '1'), $tipos_deducibles); ?>
+
+            </div>
+        </div>
+
 		<div class="clearfix">
 			<?php echo Form::label('Valor', 'valor'); ?>
 

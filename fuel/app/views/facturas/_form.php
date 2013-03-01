@@ -42,7 +42,16 @@
 
 			</div>
 		</div>
-		<div class="actions">
+
+        <div class="clearfix">
+            <?php echo Form::label('Comentario', 'comentario'); ?>
+
+            <div class="input">
+                <?php echo Form::textarea('comentario', isset($factura) ? $factura->comentario : '', array('rows' => 3, 'class' => 'span4'));?>
+
+            </div>
+        </div>
+        <div class="btn-group">
 			<?php echo Form::submit('submit', 'Grabar Factura', array('class' => 'btn btn-primary')); ?>
             <?php echo Html::anchor('facturas', 'Ir al listado de facturas', array('class' => 'btn')); ?>
 		</div>

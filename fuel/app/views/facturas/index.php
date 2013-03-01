@@ -1,4 +1,4 @@
-<h2>Listing Facturas</h2>
+<h2>Proveedores</h2>
 <br>
 <?php if ($facturas): ?>
 <table class="table table-striped table-hover">
@@ -6,7 +6,6 @@
 		<tr>
 			<th>Ruc</th>
 			<th>Nombre</th>
-
 			<th>Total</th>
 			<th></th>
 		</tr>
@@ -26,7 +25,7 @@
 </table>
 <?php echo $pagination->render(); ?>
 <?php else: ?>
-<p>No Facturas.</p>
+<p>A&uacute;n no has ingresado Facturas.</p>
 
 <?php endif; ?><p>
 	<?php echo Html::anchor('facturas/create', 'Registrar Nueva Factura', array('class' => 'btn btn-success')); ?>

@@ -13,8 +13,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span12">
-				<h1><?php echo $title; ?></h1>
-				<hr>
+
 <?php if (Session::get_flash('success')): ?>
 				<div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>

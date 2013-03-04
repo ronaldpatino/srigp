@@ -28,7 +28,7 @@ class Controller_Facturas extends Controller_Template
         $config = array(
 
             'total_items' => $query->count(),
-            'per_page' => 2,
+            'per_page' => 10,
             'uri_segment' => 'page',
             'current_page' => $page,
             'template' => array(
@@ -57,6 +57,7 @@ class Controller_Facturas extends Controller_Template
 
         $data['pagination'] = $pagination;
         $view = View::forge('facturas/index', $data);
+        $view->set_global('gastos', '1');
         $this->template->title = "Facturas";
 		$this->template->content = $view;
 
@@ -102,6 +103,7 @@ class Controller_Facturas extends Controller_Template
         $data['pagination'] = $pagination;
 
         $view = View::forge('facturas/view', $data);
+        $view->set_global('gastos', '1');
         $view->set_global('tipos_deducibles', $this->get_categorias());
         $this->template->title = "Factura";
 		$this->template->content = $view;
@@ -163,6 +165,7 @@ class Controller_Facturas extends Controller_Template
 
 		$this->template->title = "Facturas";
         $view = View::forge('facturas/create');
+        $view->set_global('gastos', '1');
         $view->set_global('tipos_deducibles', $this->get_categorias());
 		$this->template->content = $view;
 

@@ -92,7 +92,9 @@ class Controller_Welcome extends Controller_Template
         $data['datos_categoria'] = '[' . implode(',',$datos) . ']';
         $data['label_categoria'] = $this->utf8_urldecode(  "['%%.%% - " . implode("','%%.%% - ",$label_categoria) . "']");
 
+
         $view = View::forge('welcome/index', $data);
+        $view->set_global('home', '1');
         $this->template->title = "Facturas";
         $this->template->content = $view;
 	}

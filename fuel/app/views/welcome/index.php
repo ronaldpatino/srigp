@@ -6,9 +6,8 @@
         -webkit-box-shadow: 0 1px 3px #666;
         width: 580px;
         height: 370px;
-
         margin :1em;
-        background:url(public/assets/img/bg.png) right bottom no-repeat
+        background:url(assets/img/bg.png) right bottom no-repeat
     }
 
     #gastos_categoria_container{
@@ -19,7 +18,7 @@
         height: 370px;
 
         margin :1em;
-        background:url(public/assets/img/bg.png) right bottom no-repeat
+        background:url(assets/img/bg.png) right bottom no-repeat
     }
 
 </style>

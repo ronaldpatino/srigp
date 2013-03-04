@@ -5,12 +5,41 @@
 	<title><?php echo $title; ?></title>
 	<?php echo Asset::css(array('bootstrap.css','datepicker.css')); ?>
     <?php echo Asset::js(array('jquery.js', 'bootstrap.js','bootstrap-datepicker.js','raphael-min.js','g.raphael-min.js','g.pie-min.js','util.js'));?>
-	<style>
-		body { margin: 40px; }
-	</style>
+
 </head>
 <body>
-	<div class="container">
+
+<div class="navbar nav-pills navbar-static-top">
+    <div class="navbar-inner">
+        <?php echo Html::anchor('/', 'GP', array('class'=>'brand'));?>
+
+        <ul class="nav">
+            <li <?php echo isset($home)?'class="active"':'';?>><?php echo Html::anchor('/', '<i class="icon-home"></i> Inicio');?></li>
+            <li <?php echo isset($gastos)?'class="active"':'';?>><?php echo Html::anchor('/facturas/', '<i class="icon-briefcase"></i> Gastos');?></li>
+            <li <?php echo isset($reportes)?'class="active"':'';?>><?php echo Html::anchor('/reportes/', '<i class="icon-book"></i> Reportes');?></li>
+            <li <?php echo isset($ayuda)?'class="active"':'';?>><?php echo Html::anchor('/ayuda/', '<i class="icon-question-sign"></i> Ayuda');?></li>
+        </ul>
+
+
+
+
+        <ul class="nav pull-right">
+            <li>
+                <?php echo Form::open(array('action' => 'facturas/create/', 'method' => 'get', 'class'=>'nav pull-right form-inline', 'style'=>'margin:0px;width:200px;'));?>
+                <button class="btn btn-primary" type="submit">Registrar Nueva Factura</button>
+                <?php echo Form::close();?>
+
+            </li>
+            <li class="divider-vertical"></li>
+            <li <?php echo isset($ayuda)?'class="active"':'';?>><?php echo Html::anchor('/ayuda/', '<i class="icon-question-sign"></i> Ayuda');?></li>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="container">
+
 		<div class="row">
 			<div class="span12">
 

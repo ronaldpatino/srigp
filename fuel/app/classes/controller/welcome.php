@@ -60,62 +60,37 @@ class Controller_Welcome extends Controller_Template
 
 
         /*****************************************************************************/
+        $tipos_deducibles = $this->get_categorias();
 
+        $tda = array();
+        foreach($tipos_deducibles as $i => $td)
+        {
 
-        $query = DB::query('SELECT
-                                    ( SELECT
-                                            SUM(valor)
-                                       FROM
-                                            facturas si
-                                       WHERE
-                                            si.tipo = 1)
-                                    tipo1,
-                                    ( SELECT
-                                            SUM(valor)
-                                       FROM
-                                            facturas si
-                                       WHERE
-                                            si.tipo = 2)
-                                    tipo2,
-                                    ( SELECT
-                                            SUM(valor)
-                                       FROM
-                                            facturas si
-                                       WHERE
-                                            si.tipo = 3)
-                                    tipo3,
-                                    ( SELECT
-                                            SUM(valor)
-                                       FROM
-                                            facturas si
-                                       WHERE
-                                            si.tipo = 4)
-                                    tipo4,
-                                    ( SELECT
-                                            SUM(valor)
-                                       FROM
-                                            facturas si
-                                       WHERE
-                                            si.tipo = 5)
-                                    tipo5
-                            FROM
+            $cadena = "( SELECT SUM(valor) FROM facturas si WHERE si.tipo = {$i}) tipo{$i}";
+            array_push($tda, $cadena);
+
+        }
+
+        $subsql = implode(',',$tda);
+
+        $query = DB::query('SELECT ' .
+                                    $subsql .
+                            ' FROM
                                 facturas so
-                            GROUP BY tipo')->as_object('Model_Factura')->execute();
+                            GROUP BY tipo')->execute();
 
         $datos = array();
+        $label_categoria = array();
 
-
-
-            array_push($datos, ($query[0]->tipo1 >0)?$query[0]->tipo1:0);
-            array_push($datos, ($query[0]->tipo2 >0)?$query[0]->tipo2:0);
-            array_push($datos, ($query[0]->tipo3 >0)?$query[0]->tipo3:0);
-            array_push($datos, ($query[0]->tipo4 >0)?$query[0]->tipo4:0);
-            array_push($datos, ($query[0]->tipo5 >0)?$query[0]->tipo51:0);
-
-
+        foreach($tipos_deducibles as $i => $td)
+        {
+            $indice = 'tipo' . $i;
+            array_push($datos, ($query[0][$indice] >0)?$query[0][$indice]:0);
+            array_push($label_categoria, $td);
+        }
 
         $data['datos_categoria'] = '[' . implode(',',$datos) . ']';
-        $data['label_categoria'] = "['%%.%% - uno','%%.%% - dos','%%.%% - tres','%%.%% - cuatro','%%.%% - cinco']";
+        $data['label_categoria'] = $this->utf8_urldecode(  "['%%.%% - " . implode("','%%.%% - ",$label_categoria) . "']");
 
         $view = View::forge('welcome/index', $data);
         $this->template->title = "Facturas";
@@ -144,4 +119,22 @@ class Controller_Welcome extends Controller_Template
 	{
 		return Response::forge(ViewModel::forge('welcome/404'), 404);
 	}
+
+    private function get_categorias()
+    {
+        $categorias = Model_Categoria::find('all');
+        foreach($categorias as $c)
+        {
+            $resultado[$c->id] = $c->nombre;
+        }
+
+        return isset($resultado)?$resultado:0;
+
+    }
+
+    private function utf8_urldecode($str) {
+        $str = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($str));
+        return html_entity_decode($str,null,'UTF-8');;
+    }
 }
+

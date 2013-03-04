@@ -26,87 +26,119 @@
 <div id="container"></div>
 <div id="container2"></div>
 
-    <script>
-        window.onload = function () {
+<script>
 
-            /* Title settings */
-            title = "October Browser Statistics";
-            titleXpos = 390;
-            titleYpos = 85;
-
-            /* Pie Data */
-            pieRadius = 130;
-            pieXpos = 150;
-            pieYpos = 180;
-            pieData = <?php echo $datos?>;
-            pieLegend = <?php echo $label?>;
-
-            pieLegendPos = "east";
-            var r = Raphael("container");
-
-            r.text(titleXpos, titleYpos, title).attr({"font-size": 20});
-
-            var pie = r.piechart(pieXpos, pieYpos, pieRadius, pieData, {legend: pieLegend, legendpos: pieLegendPos});
-            pie.hover(function () {
-                this.sector.stop();
-                this.sector.scale(1.1, 1.1, this.cx, this.cy);
-
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].attr({ r: 7.5 });
-                    this.label[1].attr({ "font-weight": 800, "font-size": 18 });
-                }
-            }, function () {
-
-                this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
-
-                if (this.label) {
-                    this.label[0].stop
-                    this.label[0].animate({ r: 5 }, 500, "bounce");
-                    this.label[1].attr({ "font-weight": 400 });
-                    this.label[1].attr({ "font-size": 12 });
-                }
-            });
+    var gastos_proveedor = new Object();
+    // hero graph
+    gastos_proveedor.container = "container";
+    gastos_proveedor.pieLegendPos = "east";
+    gastos_proveedor.legendTop = 85;
+    gastos_proveedor.legendLeft = 340;
+    gastos_proveedor.pieRadius = 130;
+    gastos_proveedor.pieXpos = 150;
+    gastos_proveedor.pieYpos = 180;
+    gastos_proveedor.pieData = <?php echo $datos?>;
+    gastos_proveedor.pieLegend = <?php echo $label?>;
+    gastos_proveedor.legend = "Gastos por Proveedor";
 
 
-            /* Title settings */
-            title = "September Browser Statistics";
-            titleXpos = 390;
-            titleYpos = 85;
+</script>
 
-            /* Pie Data */
-            pieRadius = 130;
-            pieXpos = 150;
-            pieYpos = 180;
-            pieData = <?php echo $datos_categoria?>;
-            pieLegend = <?php echo $label_categoria?>;
+<script>
+    $(document).ready(function(){
 
-            pieLegendPos = "east";
-            var r = Raphael("container2");
+        if(gastos_proveedor.hasOwnProperty('container')) {
+            setGraph(gastos_proveedor);
+        }
+    });
 
-            r.text(titleXpos, titleYpos, title).attr({"font-size": 20});
-
-            var pie = r.piechart(pieXpos, pieYpos, pieRadius, pieData, {legend: pieLegend, legendpos: pieLegendPos});
-            pie.hover(function () {
-                this.sector.stop();
-                this.sector.scale(1.1, 1.1, this.cx, this.cy);
-
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].attr({ r: 7.5 });
-                    this.label[1].attr({ "font-weight": 800, "font-size": 18 });
-                }
-            }, function () {
-
-                this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
-
-                if (this.label) {
-                    this.label[0].stop
-                    this.label[0].animate({ r: 5 }, 500, "bounce");
-                    this.label[1].attr({ "font-weight": 400 });
-                    this.label[1].attr({ "font-size": 12 });
+    function setGraph(settings){
+        /*
+        *https://github.com/kennyshen/g.raphael/blob/master/docs/pie.md
+        *http://jburrows.wordpress.com/2011/02/21/documentation-for-graphael-g-line-js/
+        *https://github.com/kennyshen/g.raphael/blob/master/docs/reference.js
+        *http://www.exratione.com/2011/10/a-few-tips-for-graphael-line-charts/
+        */
+        var r = Raphael(settings.container),
+            pie = r.piechart(settings.pieXpos, settings.pieYpos, settings.pieRadius,
+                settings.pieData, {
+                    legend: settings.pieLegend,
+                    stroke: 'none'
+                });
+        r.text(4, r.height - 10, settings.legend).attr({
+            font: "12px sans-serif",
+            fill: "#000",
+            'text-anchor': 'start'
+        });
+        for( var i = 0, l = pie.labels.length; i < l; i++ ) {
+            // change the axis and tick-marks
+            //pie.labels[i].attr("stroke", "#000000");
+            pie.labels[i].attr("font", "13px sans-serif");
+            pie.labels[i].attr("x", settings.legendLeft+20);
+            pie.labels[i].attr("cx", settings.legendLeft);
+            pie.labels[i].attr("y", settings.legendTop+i*20);
+            pie.labels[i].attr("cy", settings.legendTop+i*20);
+            pie.labels[i][1].attr( "fill", "#000000" );
+        }
+        pie.each(function(){
+            this.sector.scale(0, 0, this.cx, this.cy);
+            this.sector.animate({
+                transform: 's1 1 ' + this.cx + ' ' + this.cy
+            }, 1000, "bounce");
+        });
+        pie.hover(function () {
+            pie.each(function() {
+                if(this.sector.hasOwnProperty('t')) {
+                    this.sector.t.remove();
                 }
             });
+            var that = this.sector;
+            this.sector.stop();
+            this.sector.animate({
+                transform: 's1.1 1.1 ' + this.cx + ' ' + this.cy
+            }, 500, "bounce");
+            pie.each(function() {
+                if(this.sector.id === that.id) {
+                    this.sector.animate({
+                        "opacity":1
+                    }, 1000);
+                    this.sector.scale(1.1, 1.1, this.cx, this.cy);
+                    this.sector.t = r.text(this.x, this.y, '$' + this.sector.value.value).attr({
+                        "font-size": 18,
+                        "fill":"#FFF"
+                    });
+                    if (this.label) {
+                        this.label[0].stop();
+                        this.label[0].attr({
+                            r: 7.5
+                        });
+                        this.label[1].attr({
+                            "font-weight": 800
+                        });
+                    }
+                } else {
+                    this.sector.animate({
+                        "opacity":0.80
+                    }, 1000);
+//this.sector.t.remove();
+                }
+            });
+        }, function () {
+            pie.animate({
+                "opacity":1
+            }, 1000);
+            this.sector.animate({
+                transform: 's1 1 ' + this.cx + ' ' + this.cy
+            }, 1500, "bounce");
+            if (this.label) {
+                this.label[0].animate({
+                    r: 5
+                }, 500, "bounce");
+                this.label[1].attr({
+                    "font-weight": 400
+                });
+            }
+        });
+    }
 
-        };
-    </script>
+</script>

@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title><?php echo $title; ?></title>
 	<?php echo Asset::css(array('bootstrap.css','datepicker.css')); ?>
-    <?php echo Asset::js(array('jquery.js', 'bootstrap.js','bootstrap-datepicker.js','raphael-min.js','g.raphael-min.js','g.pie-min.js'));?>
+    <?php echo Asset::js(array('jquery.js', 'bootstrap.js','bootstrap-datepicker.js','raphael-min.js','g.raphael-min.js','g.pie-min.js','util.js'));?>
 	<style>
 		body { margin: 40px; }
 	</style>

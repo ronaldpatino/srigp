@@ -2,9 +2,6 @@
 class Controller_Facturas extends Controller_Template 
 {
 
-    protected static $tipos_deducibles = array('1' => 'ALIMENTACI&Oacute;N', '2' => 'EDUCACI&Oacute;N', '3'=>'SALUD','4'=>'VESTIMENTA', '5'=>'VIVIENDA');
-
-
 	public function action_index()
 	{
 
@@ -105,7 +102,7 @@ class Controller_Facturas extends Controller_Template
         $data['pagination'] = $pagination;
 
         $view = View::forge('facturas/view', $data);
-        $view->set_global('tipos_deducibles', Controller_Facturas::$tipos_deducibles);
+        $view->set_global('tipos_deducibles', $this->get_categorias());
         $this->template->title = "Factura";
 		$this->template->content = $view;
 
@@ -166,7 +163,7 @@ class Controller_Facturas extends Controller_Template
 
 		$this->template->title = "Facturas";
         $view = View::forge('facturas/create');
-        $view->set_global('tipos_deducibles', Controller_Facturas::$tipos_deducibles);
+        $view->set_global('tipos_deducibles', $this->get_categorias());
 		$this->template->content = $view;
 
 
@@ -244,5 +241,17 @@ class Controller_Facturas extends Controller_Template
 		Response::redirect('facturas');
 
 	}
+
+    private function get_categorias()
+    {
+        $categorias = Model_Categoria::find('all');
+        foreach($categorias as $c)
+        {
+            $resultado[$c->id] = $c->nombre;
+        }
+
+        return isset($resultado)?$resultado:0;
+
+    }
 
 }

@@ -5,7 +5,6 @@ class Controller_Ayuda extends Controller_Template
 	public function action_index($menu_id=1)
 	{
 
-
         $data['ayudas'] = Model_Ayuda::find('all', array(
             'where' => array(
                 array('menu', $menu_id),
@@ -15,9 +14,8 @@ class Controller_Ayuda extends Controller_Template
 		switch($menu_id)
         {
             case 1:
-                $data['menu'] = "Ayuda para Periodistas";
-                $this->template->title = "Ayuda para Periodistas";
-                $this->template->menu_id = 1;
+                $data['menu'] = "Ayuda ";
+                $this->template->title = "Ayuda";
                 break;
 
             case 2:

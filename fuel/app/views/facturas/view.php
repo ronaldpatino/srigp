@@ -6,6 +6,7 @@
     <tr>
         <th>Fecha</th>
         <th>Tipo</th>
+        <th>N&uacute;mero de Factura</th>
         <th>Valor</th>
     </tr>
     </thead>
@@ -25,6 +26,7 @@
         </td>
 
         <td><?php echo  $tipos_deducibles[$factura->tipo]; ?></td>
+        <td><?php echo $factura->numero_factura;?></td>
         <td>$ <?php echo $factura->valor; ?></td>
 
     </tr>

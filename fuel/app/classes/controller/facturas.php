@@ -123,6 +123,7 @@ class Controller_Facturas extends Controller_Template
 					'nombre' => Str::upper(Input::post('nombre')),
                     'tipo' => Input::post('tipo'),
 					'fecha' => Input::post('fecha'),
+                    'numero_factura' => Input::post('numero_factura'),
 					'valor' => Input::post('valor'),
                     'comentario' => Input::post('comentario'),
 				));
@@ -149,7 +150,7 @@ class Controller_Facturas extends Controller_Template
 
                     Session::set_flash('success', 'Added factura #'.$factura->id.'.');
 
-					Response::redirect('facturas');
+					Response::redirect('facturas/create');
 				}
 
 				else
@@ -189,6 +190,8 @@ class Controller_Facturas extends Controller_Template
 			$factura->ruc = Input::post('ruc');
 			$factura->nombre = Input::post('nombre');
 			$factura->fecha = Input::post('fecha');
+            $factura->tipo = Input::post('tipo');
+            $factura->numero_factura = Input::post('numero_factura');
 			$factura->valor = Input::post('valor');
             $factura->comentario = Input::post('comentario');
 
@@ -213,6 +216,9 @@ class Controller_Facturas extends Controller_Template
 				$factura->nombre = $val->validated('nombre');
 				$factura->fecha = $val->validated('fecha');
 				$factura->valor = $val->validated('valor');
+                $factura->numero_factura = $val->validated('numero_factura');
+                $factura->tipo = $val->validated('tipo');
+                $factura->comentario = $val->validated('comentario');
 
 				Session::set_flash('error', $val->error());
 			}

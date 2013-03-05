@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2013-03-04 18:32:43
+Date: 2013-03-05 09:34:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,9 +45,10 @@ CREATE TABLE `facturas` (
   `ruc` varchar(13) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `fecha` datetime NOT NULL,
+  `numero_factura` int(11) NOT NULL,
   `tipo` int(1) NOT NULL,
   `valor` decimal(10,2) NOT NULL,
-  `comentario` varchar(255) DEFAULT NULL,
+  `comentario` varchar(255) NOT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)

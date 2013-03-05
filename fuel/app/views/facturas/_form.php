@@ -34,6 +34,15 @@
             </div>
         </div>
 
+        <div class="clearfix">
+            <?php echo Form::label('N&uacute;mero de Factura', 'numero_factura'); ?>
+
+            <div class="input">
+                <?php echo Form::input('numero_factura', Input::post('numero_factura', isset($factura) ? $factura->valor : ''), array('class' => 'span4', 'autocomplete'=>'off')); ?>
+
+            </div>
+        </div>
+
 		<div class="clearfix">
 			<?php echo Form::label('Valor', 'valor'); ?>
 

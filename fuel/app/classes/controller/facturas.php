@@ -166,7 +166,7 @@ class Controller_Facturas extends Controller_Template
 
 		$this->template->title = "Facturas";
         $view = View::forge('facturas/create');
-        $view->set_global('gastos', '1');
+        $view->set_global('home', '1');
         $view->set_global('tipos_deducibles', $this->get_categorias());
 		$this->template->content = $view;
 

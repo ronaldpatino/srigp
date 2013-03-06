@@ -11,7 +11,7 @@ class Create_facturas
 			'ruc' => array('constraint' => 13, 'type' => 'varchar'),
 			'nombre' => array('constraint' => 255, 'type' => 'varchar'),
 			'fecha' => array('type' => 'datetime'),
-			'numero_factura' => array('constraint' => 11, 'type' => 'int'),
+			'numero_factura' => array('constraint' => 15, 'type' => 'varchar'),
 			'tipo' => array('constraint' => 1, 'type' => 'int'),
 			'valor' => array('constraint' => '10,2', 'type' => 'decimal'),
 			'comentario' => array('constraint' => 255, 'type' => 'varchar'),

@@ -14,7 +14,6 @@
         <?php foreach ($facturas as $factura): ?>
     <tr>
 
-
         <td>
             <?php if (!empty($factura->comentario)):?>
             <a class="btn btn-primary btn-mini comentario" href="#" data-toggle='tooltip' title='<?php echo htmlspecialchars($factura->comentario, ENT_QUOTES);?>'><i class="icon-tag icon-white"></i></a>
@@ -39,8 +38,7 @@
 
 <?php endif; ?>
 <div class="btn-group">
-    <?php echo Html::anchor('facturas', '&lt;Ir al listado de facturas', array('class' => 'btn')); ?>
-    <?php echo Html::anchor('facturas/create', 'Registrar Nueva Factura', array('class' => 'btn btn-success')); ?>
+    <?php echo Html::anchor('facturas', '&lt;&lt; Ir al listado de facturas', array('class' => 'btn btn-success')); ?>
 </div>
 
 

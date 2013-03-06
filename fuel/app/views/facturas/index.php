@@ -27,7 +27,4 @@
 <?php else: ?>
 <p>A&uacute;n no has ingresado Facturas.</p>
 
-<?php endif; ?><p>
-	<?php echo Html::anchor('facturas/create', 'Registrar Nueva Factura', array('class' => 'btn btn-success')); ?>
-
-</p>
+<?php endif; ?>

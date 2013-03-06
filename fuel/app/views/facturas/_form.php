@@ -61,7 +61,6 @@
             </div>
         </div>
         <div class="btn-group">
-            <?php echo Html::anchor('facturas', '&lt;Ir a Proveedores', array('class' => 'btn')); ?>
 			<?php echo Form::submit('submit', 'Grabar Factura', array('class' => 'btn btn-primary')); ?>
 		</div>
 	</fieldset>

@@ -9,6 +9,22 @@
 class MyValidation extends \Fuel\Core\Validation
 {
 
+    public function _validation_unique($val, $options)
+    {
+        MyValidation::active()->set_message('unique', 'El nombre de categoria: ' . $val . ' ya esta usado');
+
+        list($table, $field) = explode('.', $options);
+
+        $result = DB::select("UPPER (\"$field\")")
+            ->where($field, '=', Str::upper($val))
+            ->from($table)->execute();
+
+        return ! ($result->count() > 0);
+    }
+
+
+
+
     /**
      *
      */
@@ -31,7 +47,6 @@ class MyValidation extends \Fuel\Core\Validation
         $validation = MyValidation::validar_cedula_ruc($ruc);
         if (is_string($validation) )
         {
-
             MyValidation::set_message('ruc',$validation);
             return false;
         }

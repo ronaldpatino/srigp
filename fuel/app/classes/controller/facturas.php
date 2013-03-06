@@ -188,7 +188,7 @@ class Controller_Facturas extends Controller_Template
 		if ($val->run())
 		{
 			$factura->ruc = Input::post('ruc');
-			$factura->nombre = Input::post('nombre');
+			$factura->nombre = Str::upper(Input::post('nombre'));
 			$factura->fecha = Input::post('fecha');
             $factura->tipo = Input::post('tipo');
             $factura->numero_factura = Input::post('numero_factura');

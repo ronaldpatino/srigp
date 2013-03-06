@@ -23,8 +23,8 @@ class Model_Categoria extends Model
 
 	public static function validate($factory)
 	{
-		$val = Validation::forge($factory);
-		$val->add_field('nombre', 'Nombre', 'required|max_length[50]');
+		$val = MyValidation::forge($factory);
+		$val->add_field('nombre', 'Nombre', 'required|max_length[50]|unique[categorias.nombre]');
 
 		return $val;
 	}

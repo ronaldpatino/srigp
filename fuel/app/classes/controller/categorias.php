@@ -34,7 +34,7 @@ class Controller_Categorias extends Controller_Template
 			if ($val->run())
 			{
 				$categoria = Model_Categoria::forge(array(
-					'nombre' => Input::post('nombre'),
+					'nombre' => Str::upper(Input::post('nombre')),
 				));
 
 				if ($categoria and $categoria->save())
@@ -74,7 +74,7 @@ class Controller_Categorias extends Controller_Template
 
 		if ($val->run())
 		{
-			$categoria->nombre = Input::post('nombre');
+			$categoria->nombre = Str::upper(Input::post('nombre'));
 
 			if ($categoria->save())
 			{

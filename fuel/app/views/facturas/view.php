@@ -38,7 +38,7 @@
 
 <?php endif; ?>
 <div class="btn-group">
-    <?php echo Html::anchor('facturas', '&lt;&lt; Ir al listado de facturas', array('class' => 'btn btn-success')); ?>
+    <?php echo Html::anchor('facturas', '&lt;&lt; Ir al listado de proveedores', array('class' => 'btn btn-success')); ?>
 </div>
 
 

@@ -1,5 +1,5 @@
 <?php
-class Controller_Rucs extends Controller_Template 
+class Controller_Rucs extends Controller_Seguro
 {
 
 	public function action_index()

@@ -1,5 +1,5 @@
 <?php
-class Controller_Ayuda extends Controller_Template
+class Controller_Ayuda extends Controller_Seguro
 {
 
 	public function action_index($menu_id=1)

@@ -37,7 +37,7 @@
                     <li><?php echo Html::anchor('/configuracion/', '<i class="icon-wrench"></i> Configuraci&oacute;n');?></li>
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
-                    <li><?php echo Html::anchor('/ayuda/', '<i class="icon-remove-sign"></i> Salir');?></li>
+                    <li><?php echo Html::anchor('/users/logout', '<i class="icon-remove-sign"></i> Salir');?></li>
                 </ul>
             </li>
         </ul>

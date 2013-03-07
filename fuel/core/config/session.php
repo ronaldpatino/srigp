@@ -30,7 +30,7 @@ return array(
 	'auto_initialize'	=> true,
 
 	// if no session type is requested, use the default
-	'driver'			=> 'cookie',
+	'driver'			=> 'db',
 
 	// check for an IP address match after loading the cookie (optional, default = false)
 	'match_ip'			=> false,
@@ -51,7 +51,7 @@ return array(
 	'encrypt_cookie'	=> true,
 
 	// if true, the session expires when the browser is closed (optional, default = false)
-	'expire_on_close'	=> false,
+	'expire_on_close'	=> true,
 
 	// session expiration time, <= 0 means 2 years! (optional, default = 2 hours)
 	'expiration_time'	=> 7200,

@@ -19,7 +19,7 @@
  * @package  app
  * @extends  Controller
  */
-class Controller_Reportes extends Controller_Template
+class Controller_Reportes extends Controller_Seguro
 {
 
 	/**

@@ -168,7 +168,7 @@
         $('#form_ruc').typeahead({
             minLength: 3,
             source: function(ruc, process) {
-                $.post('/fp/api/rucs.json', { ruc: ruc, limit: 10 }, function(data) {
+                $.post('<?php echo \Fuel\Core\Uri::create('api/rucs.json')?>', { ruc: ruc, limit: 10 }, function(data) {
                     listado = [];
                     mapa = {};
 

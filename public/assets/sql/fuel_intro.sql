@@ -10,10 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2013-03-05 09:34:31
+Date: 2013-03-07 18:00:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `ayudas`
+-- ----------------------------
+DROP TABLE IF EXISTS `ayudas`;
+CREATE TABLE `ayudas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `descripcion` text NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `video` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ayudas
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `categorias`
@@ -31,7 +50,7 @@ CREATE TABLE `categorias` (
 -- Records of categorias
 -- ----------------------------
 INSERT INTO `categorias` VALUES ('1', 'ALIMENTACIÓN', '1362417563', '1362417563');
-INSERT INTO `categorias` VALUES ('2', 'EDUCACI&Oacute;N', '1362417571', '1362417571');
+INSERT INTO `categorias` VALUES ('2', 'EDUCACIÓN', '1362417571', '1362417571');
 INSERT INTO `categorias` VALUES ('3', 'SALUD', '1362417579', '1362417579');
 INSERT INTO `categorias` VALUES ('4', 'VESTIMENTA', '1362417587', '1362417587');
 INSERT INTO `categorias` VALUES ('5', 'VIVIENDA', '1362417593', '1362417593');
@@ -45,7 +64,7 @@ CREATE TABLE `facturas` (
   `ruc` varchar(13) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `fecha` datetime NOT NULL,
-  `numero_factura` int(11) NOT NULL,
+  `numero_factura` varchar(15) NOT NULL,
   `tipo` int(1) NOT NULL,
   `valor` decimal(10,2) NOT NULL,
   `comentario` varchar(255) NOT NULL,
@@ -74,6 +93,9 @@ CREATE TABLE `migration` (
 INSERT INTO `migration` VALUES ('app', 'default', '001_create_facturas');
 INSERT INTO `migration` VALUES ('app', 'default', '002_create_rucs');
 INSERT INTO `migration` VALUES ('app', 'default', '003_create_categorias');
+INSERT INTO `migration` VALUES ('app', 'default', '004_create_ayudas');
+INSERT INTO `migration` VALUES ('app', 'default', '005_add_video_to_ayudas');
+INSERT INTO `migration` VALUES ('app', 'default', '006_create_users');
 
 -- ----------------------------
 -- Table structure for `rucs`
@@ -86,8 +108,53 @@ CREATE TABLE `rucs` (
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rucs
 -- ----------------------------
+INSERT INTO `rucs` VALUES ('1', '0102880291001', 'RONALD PATIÑO', '1362494530', '1362494530');
+INSERT INTO `rucs` VALUES ('2', '0100229434001', 'JOSE PATIÑO', '1362494631', '1362494631');
+
+-- ----------------------------
+-- Table structure for `sessions`
+-- ----------------------------
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE `sessions` (
+  `session_id` varchar(40) NOT NULL,
+  `previous_id` varchar(40) NOT NULL,
+  `user_agent` text NOT NULL,
+  `ip_hash` char(32) NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `updated` int(10) unsigned NOT NULL DEFAULT '0',
+  `payload` longtext NOT NULL,
+  PRIMARY KEY (`session_id`),
+  UNIQUE KEY `PREVIOUS` (`previous_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sessions
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `users`
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `group` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `last_login` int(11) NOT NULL,
+  `login_hash` varchar(255) NOT NULL,
+  `profile_fields` text NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES ('1', 'ronald', 'y1UgCaVfKgw6P1cXm8J1r5ArLAoNpCXQfGNUJz1g+4c=', '1', 'ronald@test.com', '1362697031', 'f0e9246b4409e12ac07d4f2d1c593759929b7336', 'a:0:{}', '1362682083', null);

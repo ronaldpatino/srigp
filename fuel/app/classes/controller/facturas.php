@@ -58,7 +58,7 @@ class Controller_Facturas extends Controller_Template
         $data['pagination'] = $pagination;
         $view = View::forge('facturas/index', $data);
         $view->set_global('gastos', '1');
-        $this->template->title = "Facturas";
+        $this->template->title = "Gastos";
 		$this->template->content = $view;
 
 	}
@@ -105,7 +105,7 @@ class Controller_Facturas extends Controller_Template
         $view = View::forge('facturas/view', $data);
         $view->set_global('gastos', '1');
         $view->set_global('tipos_deducibles', $this->get_categorias());
-        $this->template->title = "Factura";
+        $this->template->title = "Gastos";
 		$this->template->content = $view;
 
 	}

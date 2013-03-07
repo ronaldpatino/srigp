@@ -63,21 +63,24 @@ class Controller_Reportes extends Controller_Template
         $tipos_deducibles = $this->get_categorias();
 
         $tda = array();
+        $group = array();
         foreach($tipos_deducibles as $i => $td)
         {
 
-            $cadena = "( SELECT SUM(valor) FROM facturas si WHERE si.tipo = {$i}) tipo{$i}";
+            $cadena = "(SELECT SUM(valor) FROM facturas si WHERE si.tipo = {$i}) tipo{$i}";
             array_push($tda, $cadena);
+            array_push($group, "tipo{$i}");
 
         }
 
         $subsql = implode(',',$tda);
+        $group = implode(',',$group);
 
         $query = DB::query('SELECT ' .
                                     $subsql .
                             ' FROM
                                 facturas so
-                            GROUP BY tipo')->execute();
+                            GROUP BY '. $group)->execute();
 
         $datos = array();
         $label_categoria = array();
@@ -85,8 +88,13 @@ class Controller_Reportes extends Controller_Template
         foreach($tipos_deducibles as $i => $td)
         {
             $indice = 'tipo' . $i;
-            array_push($datos, ($query[0][$indice] >0)?$query[0][$indice]:0);
-            array_push($label_categoria, $td);
+            if ($query[0][$indice] >0)
+            {
+                array_push($datos, $query[0][$indice]);
+                array_push($label_categoria, $td);
+            }
+
+
         }
 
         $data['datos_categoria'] = '[' . implode(',',$datos) . ']';
@@ -95,7 +103,7 @@ class Controller_Reportes extends Controller_Template
 
         $view = View::forge('reportes/index', $data);
         $view->set_global('reportes', '1');
-        $this->template->title = "Facturas";
+        $this->template->title = "Reportes";
         $this->template->content = $view;
 	}
 
@@ -129,9 +137,7 @@ class Controller_Reportes extends Controller_Template
         {
             $resultado[$c->id] = $c->nombre;
         }
-
-        return isset($resultado)?$resultado:0;
-
+        return isset($resultado)?$resultado:array();
     }
 
     private function utf8_urldecode($str) {

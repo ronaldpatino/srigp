@@ -34,7 +34,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Mi Cuenta <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><?php echo Html::anchor('/ayuda/', '<i class="icon-wrench"></i> Configuraci&oacute;n');?></li>
+                    <li><?php echo Html::anchor('/configuracion/', '<i class="icon-wrench"></i> Configuraci&oacute;n');?></li>
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
                     <li><?php echo Html::anchor('/ayuda/', '<i class="icon-remove-sign"></i> Salir');?></li>

@@ -31,6 +31,9 @@ class Controller_Reportes extends Controller_Seguro
 	public function action_index()
 	{
 
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
+
         $query = DB::query('SELECT
                                     ruc,
                                     nombre ,
@@ -44,7 +47,9 @@ class Controller_Reportes extends Controller_Seguro
                                     total
                             FROM
                                 facturas so
-                            GROUP BY ruc
+                            WHERE
+                                user_id = '.  $user_id[1] .
+                            ' GROUP BY ruc
 
                             ORDER BY nombre  ASC, ruc ASC')->as_object('Model_Factura')->execute();
 
@@ -67,7 +72,7 @@ class Controller_Reportes extends Controller_Seguro
         foreach($tipos_deducibles as $i => $td)
         {
 
-            $cadena = "(SELECT SUM(valor) FROM facturas si WHERE si.tipo = {$i}) tipo{$i}";
+            $cadena = "(SELECT SUM(valor) FROM facturas si WHERE si.tipo = {$i} AND user_id = {$user_id[1]}) tipo{$i} ";
             array_push($tda, $cadena);
             array_push($group, "tipo{$i}");
 
@@ -107,32 +112,22 @@ class Controller_Reportes extends Controller_Seguro
         $this->template->content = $view;
 	}
 
-	/**
-	 * A typical "Hello, Bob!" type example.  This uses a ViewModel to
-	 * show how to use them.
-	 *
-	 * @access  public
-	 * @return  Response
-	 */
-	public function action_hello()
-	{
-		return Response::forge(ViewModel::forge('reportes/hello'));
-	}
-
-	/**
-	 * The 404 action for the application.
-	 *
-	 * @access  public
-	 * @return  Response
-	 */
-	public function action_404()
-	{
-		return Response::forge(ViewModel::forge('reportes/404'), 404);
-	}
 
     private function get_categorias()
     {
-        $categorias = Model_Categoria::find('all');
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
+
+        $categorias = Model_Categoria::find('all', array(
+            'where' => array(
+                array('user_id', $user_id[1]),
+
+                'or' => array(
+                    array('user_id', 0),
+                ),
+            ),
+        ));
+
         foreach($categorias as $c)
         {
             $resultado[$c->id] = $c->nombre;

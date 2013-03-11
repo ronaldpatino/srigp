@@ -36,13 +36,21 @@ class Model_User extends \Orm\Model
     }
 
     protected static $_has_many = array(
-        'categoria' => array(
+        'categorias' => array(
             'key_from' => 'id',
             'model_to' => 'Model_Categoria',
             'key_to' => 'user_id',
             'cascade_save' => true,
             'cascade_delete' => false,
-        )
+        ),
+
+        'facturas' => array(
+            'key_from' => 'id',
+            'model_to' => 'Model_Factura',
+            'key_to' => 'user_id',
+            'cascade_save' => true,
+            'cascade_delete' => false,
+        ),
     );
 
 }

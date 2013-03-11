@@ -7,6 +7,9 @@ class Controller_Facturas extends Controller_Seguro
 
         $page = Input::get('page')? Input::get('page'):1;
 
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
+
         $query = DB::query('SELECT
                                     ruc,
                                     nombre ,
@@ -20,7 +23,9 @@ class Controller_Facturas extends Controller_Seguro
                                     total
                             FROM
                                 facturas so
-                            GROUP BY ruc
+                            WHERE
+                                user_id = '. $user_id[1].
+                            ' GROUP BY ruc
 
                             ORDER BY nombre  ASC, ruc ASC')->as_object('Model_Factura')->execute();
 
@@ -49,9 +54,12 @@ class Controller_Facturas extends Controller_Seguro
                                                                         si.ruc like so.ruc) total
                                             FROM
                                                 facturas so
-                                            GROUP BY ruc
-
-                                            ORDER BY nombre  ASC, ruc ASC
+                                            WHERE
+                                                user_id = {$user_id[1]}
+                                            GROUP BY
+                                                ruc
+                                            ORDER BY
+                                                nombre  ASC, ruc ASC
                                             LIMIT {$pagination->offset},{$pagination->per_page}
                                             ")->as_object('Model_Factura')->execute();
 
@@ -67,9 +75,11 @@ class Controller_Facturas extends Controller_Seguro
 	{
 		is_null($ruc) and Response::redirect('Facturas');
 
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
         $page = Input::get('page')? Input::get('page'):1;
 
-        $query = Model_Factura::find()->where('ruc', $ruc);
+        $query = Model_Factura::find()->where('ruc', $ruc)->where('user_id', $user_id[1]);
 
         // pagination  config
         $config = array(
@@ -86,10 +96,10 @@ class Controller_Facturas extends Controller_Seguro
 
         $pagination = Pagination::forge('mypagination', $config);
 
-
         if ( ! $data['facturas'] = Model_Factura::find('all',
                                                             array(
-                                                            'where' => array('ruc'=> $ruc),
+                                                            'where' =>
+                                                                    array(array('ruc'=> $ruc), array('user_id'=>$user_id[1])),
                                                             'order_by' => array('fecha' => 'desc', 'tipo'=>'asc'),
                                                             'limit' =>$pagination->per_page,
                                                             'offset' => $pagination->offset
@@ -115,7 +125,9 @@ class Controller_Facturas extends Controller_Seguro
 		if (Input::method() == 'POST')
 		{
 			$val = Model_Factura::validate('create');
-			
+            $auth = Auth::instance();
+            $user_id = $auth->get_user_id();
+
 			if ($val->run())
 			{
 				$factura = Model_Factura::forge(array(
@@ -125,23 +137,21 @@ class Controller_Facturas extends Controller_Seguro
 					'fecha' => Input::post('fecha'),
                     'numero_factura' => Input::post('numero_factura'),
 					'valor' => Input::post('valor'),
+                    'user_id' => $user_id[1],
                     'comentario' => Input::post('comentario'),
 				));
 
 				if ($factura and $factura->save())
 				{
 
-                    $ruc = Model_Ruc::forge(array(
-                        'ruc' => Input::post('ruc'),
-                        'nombre' => Str::upper(Input::post('nombre')),
-                    ));
-                    $ruc = Model_Ruc::query()->where('ruc', Input::post('ruc'));
+                    $ruc = Model_Ruc::query()->where('ruc', Input::post('ruc'))->where('user_id', $user_id[1]);
 
                     if ($ruc->count() == 0)
                     {
                         $ruc_nuevo = Model_Ruc::forge(array(
                             'ruc' => Input::post('ruc'),
                             'nombre' => Str::upper(Input::post('nombre')),
+                            'user_id' => $user_id[1],
                         ));
 
                         $ruc_nuevo->save();

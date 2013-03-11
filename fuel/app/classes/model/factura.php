@@ -12,6 +12,7 @@ class Model_Factura extends Model
         'tipo',
 		'valor',
         'comentario',
+        'user_id',
 		'created_at',
 		'updated_at',
 	);

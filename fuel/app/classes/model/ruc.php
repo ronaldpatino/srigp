@@ -7,6 +7,7 @@ class Model_Ruc extends Model
 		'id',
 		'ruc',
 		'nombre',
+        'user_id',
 		'created_at',
 		'updated_at',
 	);

@@ -20,10 +20,14 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
     {
         $val = Model_Categoria::validate('create');
 
-        if ($val->run())
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
+
+        if ($val->run() && $user_id)
         {
             $categoria = Model_Categoria::forge(array(
                 'nombre' => Str::upper(Input::post('nombre')),
+                'user_id' => $user_id[1],
             ));
 
             if ($categoria and $categoria->save())
@@ -46,7 +50,18 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
     public function get_categorias()
     {
-        $categorias = Model_Categoria::find('all');
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
+
+        $categorias = Model_Categoria::find('all', array(
+                                                        'where' => array(
+                                                            array('user_id', $user_id[1]),
+
+                                                            'or' => array(
+                                                                            array('user_id', 0),
+                                                            ),
+                                                        ),
+                                            ));
 
         foreach($categorias as $c)
         {

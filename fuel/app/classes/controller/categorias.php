@@ -4,7 +4,19 @@ class Controller_Categorias extends Controller_Seguro
 
 	public function action_index()
 	{
-		$data['categorias'] = Model_Categoria::find('all');
+        $auth = Auth::instance();
+        $user_id = $auth->get_user_id();
+
+        $data['categorias'] = Model_Categoria::find('all', array(
+            'where' => array(
+                array('user_id', $user_id[1]),
+
+                'or' => array(
+                    array('user_id', 0),
+                ),
+            ),
+        ));
+
 		$this->template->title = "Categorias";
 		$this->template->content = View::forge('categorias/index', $data);
 
@@ -30,11 +42,14 @@ class Controller_Categorias extends Controller_Seguro
 		if (Input::method() == 'POST')
 		{
 			$val = Model_Categoria::validate('create');
-			
-			if ($val->run())
+            $auth = Auth::instance();
+            $user_id = $auth->get_user_id();
+
+            if ($val->run() && $user_id)
 			{
 				$categoria = Model_Categoria::forge(array(
 					'nombre' => Str::upper(Input::post('nombre')),
+                    'user_id' => $user_id[1],
 				));
 
 				if ($categoria and $categoria->save())

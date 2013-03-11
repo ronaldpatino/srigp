@@ -35,4 +35,14 @@ class Model_User extends \Orm\Model
         return $val;
     }
 
+    protected static $_has_many = array(
+        'categoria' => array(
+            'key_from' => 'id',
+            'model_to' => 'Model_Categoria',
+            'key_to' => 'user_id',
+            'cascade_save' => true,
+            'cascade_delete' => false,
+        )
+    );
+
 }

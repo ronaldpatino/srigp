@@ -6,6 +6,7 @@ class Model_Categoria extends Model
 	protected static $_properties = array(
 		'id',
 		'nombre',
+        'user_id',
 		'created_at',
 		'updated_at',
 	);

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2013-03-07 18:00:16
+Date: 2013-03-11 13:47:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,17 +43,18 @@ CREATE TABLE `categorias` (
   `nombre` varchar(50) NOT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of categorias
 -- ----------------------------
-INSERT INTO `categorias` VALUES ('1', 'ALIMENTACIÓN', '1362417563', '1362417563');
-INSERT INTO `categorias` VALUES ('2', 'EDUCACIÓN', '1362417571', '1362417571');
-INSERT INTO `categorias` VALUES ('3', 'SALUD', '1362417579', '1362417579');
-INSERT INTO `categorias` VALUES ('4', 'VESTIMENTA', '1362417587', '1362417587');
-INSERT INTO `categorias` VALUES ('5', 'VIVIENDA', '1362417593', '1362417593');
+INSERT INTO `categorias` VALUES ('1', 'ALIMENTACIÓN', '1362417563', '1362417563', '0');
+INSERT INTO `categorias` VALUES ('2', 'EDUCACIÓN', '1362417571', '1362417571', '0');
+INSERT INTO `categorias` VALUES ('3', 'SALUD', '1362417579', '1362417579', '0');
+INSERT INTO `categorias` VALUES ('4', 'VESTIMENTA', '1362417587', '1362417587', '0');
+INSERT INTO `categorias` VALUES ('5', 'VIVIENDA', '1362417593', '1362417593', '0');
 
 -- ----------------------------
 -- Table structure for `facturas`
@@ -70,6 +71,7 @@ CREATE TABLE `facturas` (
   `comentario` varchar(255) NOT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -96,6 +98,9 @@ INSERT INTO `migration` VALUES ('app', 'default', '003_create_categorias');
 INSERT INTO `migration` VALUES ('app', 'default', '004_create_ayudas');
 INSERT INTO `migration` VALUES ('app', 'default', '005_add_video_to_ayudas');
 INSERT INTO `migration` VALUES ('app', 'default', '006_create_users');
+INSERT INTO `migration` VALUES ('app', 'default', '007_add_user_id_to_categorias');
+INSERT INTO `migration` VALUES ('app', 'default', '008_add_user_id_to_facturas');
+INSERT INTO `migration` VALUES ('app', 'default', '009_add_user_id_to_rucs');
 
 -- ----------------------------
 -- Table structure for `rucs`
@@ -107,14 +112,13 @@ CREATE TABLE `rucs` (
   `nombre` varchar(255) NOT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rucs
 -- ----------------------------
-INSERT INTO `rucs` VALUES ('1', '0102880291001', 'RONALD PATIÑO', '1362494530', '1362494530');
-INSERT INTO `rucs` VALUES ('2', '0100229434001', 'JOSE PATIÑO', '1362494631', '1362494631');
 
 -- ----------------------------
 -- Table structure for `sessions`
@@ -157,4 +161,4 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'ronald', 'y1UgCaVfKgw6P1cXm8J1r5ArLAoNpCXQfGNUJz1g+4c=', '1', 'ronald@test.com', '1362697031', 'f0e9246b4409e12ac07d4f2d1c593759929b7336', 'a:0:{}', '1362682083', null);
+INSERT INTO `users` VALUES ('1', 'ronald', 'y1UgCaVfKgw6P1cXm8J1r5ArLAoNpCXQfGNUJz1g+4c=', '1', 'ronald@test.com', '1363026681', 'd9f9170589e48ba3f9d49ac7373b3342dae61d98', 'a:0:{}', '1362682083', null);

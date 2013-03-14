@@ -1,5 +1,4 @@
-<h2>Listing Facturas</h2>
-<br>
+<h3>Detalle de Facturas de <?php echo $proveedor;?></h3>
 <?php if ($facturas): ?>
 <table class="table table-striped table-hover">
     <thead>

@@ -110,7 +110,10 @@ class Controller_Facturas extends Controller_Seguro
 			Response::redirect('Facturas');
 		}
 
+
+        $proveedor = Model_Ruc::find('first',array('where'=>array('ruc'=>$ruc)));
         $data['pagination'] = $pagination;
+        $data['proveedor'] =  $proveedor->nombre;
 
         $view = View::forge('facturas/view', $data);
         $view->set_global('gastos', '1');
@@ -158,14 +161,14 @@ class Controller_Facturas extends Controller_Seguro
                     }
 
 
-                    Session::set_flash('success', 'Added factura #'.$factura->id.'.');
+                    Session::set_flash('success', 'He guardado una nueva factura de: '.Str::upper(Input::post('nombre')).' por un valor de $ '.Input::post('valor'));
 
 					Response::redirect('facturas/create');
 				}
 
 				else
 				{
-					Session::set_flash('error', 'Could not save factura.');
+					Session::set_flash('error', 'No pude guardar la factura.');
 				}
 			}
 			else

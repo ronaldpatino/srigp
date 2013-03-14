@@ -1,6 +1,4 @@
-<h2>New Factura</h2>
-<br>
-
+<h3>Nueva Factura</h3>
 <?php echo render('facturas/_form'); ?>
 
 

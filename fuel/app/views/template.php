@@ -9,19 +9,16 @@
 </head>
 <body>
 
-<div class="navbar nav-pills navbar-static-top">
+<div class="navbar navbar-inverse nav-pills navbar-fixed-top">
     <div class="navbar-inner">
-        <?php echo Html::anchor('/', 'GP', array('class'=>'brand'));?>
 
+        <?php echo Html::anchor('/', 'GP', array('class'=>'brand','style'=>'margin-left:0px;'));?>
         <ul class="nav">
             <li <?php echo isset($home)?'class="active"':'';?>><?php echo Html::anchor('/', '<i class="icon-home"></i> Inicio');?></li>
             <li <?php echo isset($gastos)?'class="active"':'';?>><?php echo Html::anchor('/facturas/', '<i class="icon-briefcase"></i> Gastos');?></li>
             <li <?php echo isset($reportes)?'class="active"':'';?>><?php echo Html::anchor('/reportes/', '<i class="icon-book"></i> Reportes');?></li>
             <li <?php echo isset($ayuda)?'class="active"':'';?>><?php echo Html::anchor('/ayuda/', '<i class="icon-question-sign"></i> Ayuda');?></li>
         </ul>
-
-
-
 
         <ul class="nav pull-right">
             <li>
@@ -41,32 +38,35 @@
                 </ul>
             </li>
         </ul>
+        </div>
 
-    </div>
 </div>
-
+<hr/>
 <div class="container">
 
 		<div class="row">
-			<div class="span12">
 
 <?php if (Session::get_flash('success')): ?>
+            <div class="span12">
 				<div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Muy Bien!</strong>
 					<?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
 
 				</div>
+            </div>
 <?php endif; ?>
 <?php if (Session::get_flash('error')): ?>
+            <div class="span12">
 				<div class="alert alert-error">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Algo sali&oacute; mal</strong>
 					<?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
 
 				</div>
+            </div>
 <?php endif; ?>
-			</div>
+
 			<div class="span12">
 <?php echo $content; ?>
 			</div>

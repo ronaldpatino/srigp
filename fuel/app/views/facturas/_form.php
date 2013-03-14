@@ -1,4 +1,4 @@
-<?php echo Form::open(); ?>
+<?php echo Form::open(array('class'=>'well','style'=>'width:300px;')); ?>
 	<fieldset>
 		<div class="clearfix">
 			<?php echo Form::label('Ruc', 'ruc'); ?>

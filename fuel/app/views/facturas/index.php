@@ -1,6 +1,5 @@
-<h2>Proveedores</h2>
-<br>
-<?php if ($facturas): ?>
+<h3>Gastos</h3>
+<?php if ($facturas->count() > 0): ?>
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -25,6 +24,13 @@
 </table>
 <?php echo $pagination->render(); ?>
 <?php else: ?>
-<p>A&uacute;n no has ingresado Facturas.</p>
+
+<div class="span10">
+    <div class="alert alert-block">
+        <h4 class="alert-heading">Lo siento :-(</h4>
+        <p>A&uacute;n no has ingresado Facturas. <br/>Sin facturas no puedo calcular los Gastos. </p>
+    </div>
+</div>
+
 
 <?php endif; ?>

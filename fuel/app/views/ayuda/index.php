@@ -29,7 +29,14 @@
 </table>
 
 <?php else: ?>
-<p>No Ayudas.</p>
+
+<div class="span10">
+    <div class="alert alert-block">
+        <h4 class="alert-heading">Lo siento :-(</h4>
+        <p>No existe ayuda disponinble sobre el tema. </p>
+    </div>
+</div>
+
 
 <?php endif; ?><p>
 	<?php echo Html::anchor('ayuda/create', 'Add new Ayuda', array('class' => 'btn success')); ?>

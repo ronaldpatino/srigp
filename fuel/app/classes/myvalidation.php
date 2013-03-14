@@ -22,7 +22,17 @@ class MyValidation extends \Fuel\Core\Validation
         return ! ($result->count() > 0);
     }
 
+    public function _validation_factura_unique($val)
+    {
+        MyValidation::active()->set_message('factura_unique', 'La factura n&uacute;mero : ' . $val . ' ya esta ingresada para el proveedor :' . $this->input('nombre'));
 
+        $result = DB::select('ruc')
+            ->where('numero_factura', '=', $val)
+            ->where('ruc', '=',$this->input('ruc'))
+            ->from('facturas')->execute();
+
+        return ! ($result->count() > 0);
+    }
 
 
     /**

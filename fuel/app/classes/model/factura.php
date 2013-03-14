@@ -34,7 +34,7 @@ class Model_Factura extends Model
 		$val->add_field('ruc', 'Ruc', 'required|valid_string[numeric]|exact_length[13]|ruc');
 		$val->add_field('nombre', 'Nombre', 'required|max_length[255]');
 		$val->add_field('fecha', 'Fecha', 'required');
-        $val->add_field('numero_factura', 'Valor', 'required|decimal|factura_unique[facturas.numero_factura]');
+        $val->add_field('numero_factura', 'Valor', 'required|decimal|factura_unique');
 		$val->add_field('valor', 'Valor', 'required|decimal');
         $val->add_field('comentario', 'Valor', 'max_length[255]');
 		return $val;

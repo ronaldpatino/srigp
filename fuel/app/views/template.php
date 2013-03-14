@@ -50,7 +50,7 @@
             <div class="span12">
 				<div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Muy Bien!</strong>
+                    <h4>Muy Bien! :-)</h4>
 					<?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
 
 				</div>
@@ -60,7 +60,7 @@
             <div class="span12">
 				<div class="alert alert-error">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Algo sali&oacute; mal</strong>
+                    <h4>Lo siento, Algo sali&oacute; mal :-(</h4>
 					<?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
 
 				</div>

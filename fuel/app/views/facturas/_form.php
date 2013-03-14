@@ -56,7 +56,7 @@
             <?php echo Form::label('Comentario', 'comentario'); ?>
 
             <div class="input">
-                <?php echo Form::textarea('comentario', isset($factura) ? $factura->comentario : '', array('rows' => 3, 'class' => 'span4'));?>
+                <?php echo Form::textarea('comentario', isset($factura) ? $factura->comentario : Input::post('comentario')?Input::post('comentario'):'', array('rows' => 3, 'class' => 'span4'));?>
 
             </div>
         </div>
